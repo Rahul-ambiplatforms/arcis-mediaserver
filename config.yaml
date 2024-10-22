@@ -1,0 +1,91 @@
+# Support zero-configuration startup, that is, all plugins are enabled by default without filling in the configuration.
+# You only need to fill in the configuration items that need to be modified. You don't need to fill in all the configurations! ! .
+# Global configuration reference https://m7s.live/guide/config.html
+# For plugin configuration, refer to the documentation of each plugin.
+# Each plugin has an enable configuration. If it is false, the plugin is not enabled. The default is true, which means no configuration is required.
+#llhls:
+# http: # Refer to the global configuration format
+
+global:
+  disableall: false # Whether to disable all plugins
+  loglang: en # Log language, optional values: zh,en
+  loglevel: info # Log level, optional values: debug,info,warn,error,panic,fatal
+  http:
+    listenaddr: :8080 # Gateway address, used to access the API
+    listenaddrtls: :8443 #Port configuration for accessing the API via HTTPS
+    certfile: "/etc/letsencrypt/live/media.arcisai.io/fullchain.pem"
+    keyfile: "/etc/letsencrypt/live/media.arcisai.io/privkey.pem"
+    cors: true # Whether to automatically add the cors header
+    Username: "" # Username and password for basic authentication when accessing the API
+    password: ""
+    
+rtsp:
+    publish: # Refer to the global configuration format
+    subscribe: # Refer to the global configuration format
+    pull: # Format reference document https://m7s.live/guide/config.html#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
+    push: # Format reference document https://m7s.live/guide/config.html#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
+    listenaddr: :554
+    udpaddr: :8000
+    rtcpaddr: :8001
+    readbuffercount: 2048 # read buffer queue size
+    writebuffercount: 2048 # Write out cache queue size
+    pullprotocol: tcp # auto, tcp, udp
+    
+hdl:
+  http: # Format refer to global configuration
+  publish: # Format refer to global configuration
+  subscribe: # For the format, refer to the global configuration
+  pull: # format https://m7s.live/guide/config.html#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
+
+llhls:
+    http: # Refer to the global configuration format
+hls:
+    http: # Refer to the global configuration format
+    publish: # Format refer to global configuration
+    subscribe: # For the format, refer to the global configuration
+    pull: # format https://m7s.live/guide/config.html#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE
+    fragment: 10s # TS fragment length
+    window: 2 # The number of TS files contained in the real-time stream m3u8 file
+    filter: "" # Regular expression used to filter published streams. Only matching streams will be written.
+    path: "" # If the remote stream needs to be saved, the directory where it is stored
+    defaultts: "" # The default slice is used for header playback when there is no stream. If left blank, the system built-in
+    defaulttsduration: 3.88s #Default slice length
+    relaymode: 0 # Forwarding mode, 0: protocol conversion + no forwarding, 1: no protocol conversion + forwarding, 2: protocol conversion + forwarding
+    preload: false # Whether to preload. After preloading, all HLS subscriptions will share an internal subscriber.
+
+monitor:
+  enable: true
+
+record:
+  subscribe: # Subscription settings for recording
+  # flv:
+  # ext: .flv
+  # path: record/flv
+  # autorecord: true
+  # filter: ""
+  # fragment: 180s
+  # fmp4:
+  # ext: .mp4
+  # path: record/fmp4
+  # autorecord: true
+  # filter: ""
+  # fragment: 0
+  # hls:
+  # ext: .m3u8
+  # path: record/hls
+  # autorecord: true
+  # filter: ""
+  # fragment: 0
+  mp4:
+     ext: .mp4
+     path: record/mp4
+     autorecord: true
+     filter: ""
+     fragment: 180s
+  # raw:
+  # ext: . # File extension for the recording
+  # path: record/raw # Path where the recordings will be saved
+  # autorecord: true # Automatically start recording when the stream starts
+  # filter: "" # Filter to select specific streams for recording
+  # fragment: 180s # Length of each recording fragment
+ 
